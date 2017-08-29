@@ -47,10 +47,17 @@ w.onload = function () {
     var msg = d.getElementById("msg");
     var log = d.getElementById("log");
 
-    d.getElementById("btn_good_luck").onclick = function() { conn.send("Buona fortuna!"); }
-    d.getElementById("btn_good_game").onclick = function() { conn.send("Bella giocata"); }
-    d.getElementById("btn_wow").onclick       = function() { conn.send("Wow!"); }
+    d.getElementById("btn_good_luck").onclick = function() {
+        conn.send(JSON.stringify({ type: "message", message: "Buona fortuna!" }));
+    }
 
+    d.getElementById("btn_good_game").onclick = function() {
+        conn.send(JSON.stringify({ type: "message", message: "Bella giocata!!" }));
+    }
+
+    d.getElementById("btn_wow").onclick       = function() {
+        conn.send(JSON.stringify({ type: "message", message: "Wow!" }));
+    }
 
     d.getElementById("carta_formica").onclick = function() {
         if (prop.state.elixir.quantity >= prop.conf.carte.formica.elixir * 3) {
@@ -63,7 +70,7 @@ w.onload = function () {
         } else {
             conn.send(JSON.stringify({
                 type: "message",
-                content: "elixir insufficiente"
+                message: "elixir insufficiente"
             }));
         }
     }
@@ -79,7 +86,7 @@ w.onload = function () {
         } else {
             conn.send(JSON.stringify({
                 type: "message",
-                content: "elixir insufficiente"
+                message: "elixir insufficiente"
             }));
         }
     }
@@ -105,12 +112,20 @@ w.onload = function () {
 
         conn.onmessage = function (evt) {
             var messages = evt.data.split('\n');
+            var communications = d.getElementById('communications');
+
             json = eval(messages);
             request = JSON.parse(json);
+
+            if (request.type == 'message') {
+                communications.innerHTML = request.message;
+            }
+
             if (request.type == 'card') {
                 var item = d.createElement("div");
                 item.innerText = request.card.name
                 appendLog(item);
+                communications.innerHTML = 'nuova carta in gioco';
             }
         };
     } else {

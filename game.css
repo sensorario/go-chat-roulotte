@@ -11,18 +11,6 @@ body {
     background: gray;
 }
 
-#log {
-    background: white;
-    margin: 5.5em 0em 4em 0em;
-    padding: 0.5em 0.5em 0.5em 0.5em;
-    position: absolute;
-    top: 0.5em;
-    left: 0.5em;
-    right: 0.5em;
-    bottom: 3em;
-    overflow: auto;
-}
-
 #the_form {
     padding: 0 0.5em 0 0.5em;
     margin: 0;
@@ -31,6 +19,19 @@ body {
     left: 0px;
     width: 100%;
     overflow: hidden;
+}
+
+#timer {
+    background: orange;
+    margin: 0.5em 0em 0em 0em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    right: 0.5em;
+    bottom: 3em;
+    overflow: auto;
+    height: 1em;
 }
 
 #elixir {
@@ -46,9 +47,9 @@ body {
     height: 1em;
 }
 
-#timer {
-    background: orange;
-    margin: 0.5em 0em 0em 0em;
+#communications {
+    background: yellow;
+    margin: 5.5em 0em 0em 0em;
     padding: 0.5em 0.5em 0.5em 0.5em;
     position: absolute;
     top: 0.5em;
@@ -57,6 +58,18 @@ body {
     bottom: 3em;
     overflow: auto;
     height: 1em;
+}
+
+#log {
+    background: white;
+    margin: 8em 0em 3.5em 0em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    right: 0.5em;
+    bottom: 3em;
+    overflow: auto;
 }
 
 #cards {
