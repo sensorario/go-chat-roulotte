@@ -54,21 +54,33 @@ w.onload = function () {
 
     d.getElementById("carta_formica").onclick = function() {
         if (prop.state.elixir.quantity >= prop.conf.carte.formica.elixir * 3) {
-            conn.send(prop.conf.carte.formica.name);
+            conn.send(JSON.stringify({
+                type: "card",
+                card: prop.conf.carte.formica
+            }));
             prop.state.elixir.quantity -= prop.conf.carte.formica.elixir * 3;
             updateElixir();
         } else {
-            conn.send("elixir insufficiente");
+            conn.send(JSON.stringify({
+                type: "message",
+                content: "elixir insufficiente"
+            }));
         }
     }
 
     d.getElementById("carta_calabrone").onclick = function() {
         if (prop.state.elixir.quantity >= prop.conf.carte.calabrone.elixir * 3) {
-            conn.send(prop.conf.carte.calabrone.name);
+            conn.send(JSON.stringify({
+                type: "card",
+                card: prop.conf.carte.calabrone
+            }));
             prop.state.elixir.quantity -= prop.conf.carte.calabrone.elixir * 3;
             updateElixir();
         } else {
-            conn.send("elixir insufficiente");
+            conn.send(JSON.stringify({
+                type: "message",
+                content: "elixir insufficiente"
+            }));
         }
     }
 
@@ -93,9 +105,11 @@ w.onload = function () {
 
         conn.onmessage = function (evt) {
             var messages = evt.data.split('\n');
-            for (var i = 0; i < messages.length; i++) {
+            json = eval(messages);
+            request = JSON.parse(json);
+            if (request.type == 'card') {
                 var item = d.createElement("div");
-                item.innerText = messages[i];
+                item.innerText = request.card.name
                 appendLog(item);
             }
         };
