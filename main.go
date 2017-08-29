@@ -22,19 +22,19 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", 405)
 		return
 	}
-	http.ServeFile(w, r, "home.html")
+	http.ServeFile(w, r, "client/home.html")
 }
 
 func serveJs(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "game.js")
+	http.ServeFile(w, r, "client/game.js")
 }
 
 func serveCss(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "game.css")
+	http.ServeFile(w, r, "client/game.css")
 }
 
 func serveConfig(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "config.js")
+	http.ServeFile(w, r, "client/config.js")
 }
 
 func main() {
