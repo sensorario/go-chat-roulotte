@@ -19,10 +19,7 @@ func (c *Client) readPump() {
 	// init connection
 	c.conn.SetReadLimit(maxMessageSize)
 	c.conn.SetReadDeadline(time.Now().Add(pongWait))
-	c.conn.SetPongHandler(func(string) error {
-		c.conn.SetReadDeadline(time.Now().Add(pongWait))
-		return nil
-	})
+	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 
 	// infinite loop
 	for {
@@ -45,7 +42,6 @@ func (c *Client) readPump() {
 		// send everything!!!
 		log.Println("Invio il messaggio a tutti")
 		c.hub.broadcast <- message
-
 	}
 
 }
@@ -105,7 +101,11 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// New client created
-	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
+	client := &Client{
+		hub:  hub,
+		conn: conn,
+		send: make(chan []byte, 256),
+	}
 
 	// Il client viene registrato nell'hub
 	client.hub.register <- client
