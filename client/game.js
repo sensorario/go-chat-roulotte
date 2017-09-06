@@ -111,6 +111,8 @@ w.onload = function () {
         };
 
         conn.onmessage = function (evt) {
+            console.log("received message")
+
             var messages = evt.data.split('\n');
             var communications = d.getElementById('communications');
 

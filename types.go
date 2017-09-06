@@ -16,8 +16,10 @@ type Hub struct {
 
 // un client punta ad un Hub
 // un client al quale si possono inviare messaggi
+// un cliente ha anche un opponent
 type Client struct {
-	hub  *Hub
-	conn *websocket.Conn
-	send chan []byte
+	hub      *Hub
+	opponent *Client
+	conn     *websocket.Conn
+	send     chan []byte
 }

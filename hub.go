@@ -13,6 +13,10 @@ func newHub() *Hub {
 	}
 }
 
+type Message struct {
+	typology string
+}
+
 func (h *Hub) run() {
 	for {
 		select {
@@ -21,8 +25,18 @@ func (h *Hub) run() {
 		case client := <-h.register:
 			log.Println("register")
 			h.clients[client] = true
-			// todo assign a room to this client
-			// hub.client[questo client] = true
+			for c := range h.clients {
+				if c != client {
+					if c.opponent == nil {
+						c.opponent = client
+						client.opponent = c
+						dat := []byte(`{"foo":"bar"}`)
+						c.send <- dat
+						client.send <- dat
+						log.Println("Dovrei aver avvisato i client")
+					}
+				}
+			}
 
 		// unregister new client
 		// this method is called with defer

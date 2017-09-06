@@ -2,11 +2,15 @@ package main
 
 import (
 	"bytes"
+	//"fmt"
+	"github.com/gorilla/sessions"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
 	"time"
 )
+
+var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 func (c *Client) readPump() {
 
@@ -52,7 +56,6 @@ func (c *Client) readPump() {
 
 // Write ...
 func (c *Client) writePump() {
-
 	ticker := time.NewTicker(pingPeriod)
 
 	defer func() {
@@ -105,7 +108,12 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	}
 
 	// New client created
-	client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
+	client := &Client{
+		hub:      hub,
+		opponent: nil,
+		conn:     conn,
+		send:     make(chan []byte, 256),
+	}
 
 	// Il client viene registrato nell'hub
 	client.hub.register <- client
